@@ -1,0 +1,51 @@
+#
+# Canonical configuration for README.md (cloudposse-style doc standard,
+# native to Devotica). Run `make readme` to regenerate the terraform-docs
+# section of README.md.
+#
+
+name: terraform-aws-route53
+license: APACHE2
+github_repo: devotica-labs/terraform-aws-route53
+
+badges:
+  - name: CI
+    image: https://github.com/devotica-labs/terraform-aws-route53/actions/workflows/ci.yml/badge.svg
+    url: https://github.com/devotica-labs/terraform-aws-route53/actions/workflows/ci.yml
+  - name: Release
+    image: https://github.com/devotica-labs/terraform-aws-route53/actions/workflows/release.yml/badge.svg
+    url: https://github.com/devotica-labs/terraform-aws-route53/actions/workflows/release.yml
+  - name: License
+    image: https://img.shields.io/badge/License-Apache_2.0-blue.svg
+    url: LICENSE
+
+related:
+  - name: terraform-aws-alb
+    description: Public ALB an alias record points at (dns_name / zone_id).
+    url: https://github.com/devotica-labs/terraform-aws-alb
+  - name: terraform-aws-vpc
+    description: VPC a private hosted zone is associated with for internal name resolution.
+    url: https://github.com/devotica-labs/terraform-aws-vpc
+
+description: |-
+  Terraform module for an **Amazon Route 53 hosted zone** — public or private —
+  plus a map of DNS records. Supplying `vpc_ids` associates VPCs and makes the
+  zone private; otherwise it is public. Records support both plain entries
+  (`ttl` + `records`) and alias entries (an `alias` block to an ALB, CloudFront,
+  or another Route 53 target) in the same map. Fintech default: `force_destroy`
+  off.
+
+introduction: |-
+  This module creates an [AWS Route 53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html)
+  and a `for_each` map of records. One input creates the zone (public by
+  default, private when `vpc_ids` is non-empty), another declares the records.
+  Each record is either a plain record (`ttl` + `records`) or an alias record
+  (`alias = { name, zone_id, evaluate_target_health }`); `ttl` is omitted for
+  aliases and the two shapes are mutually exclusive per record.
+
+usage: |-
+  See [`examples/complete`](examples/complete) for a private zone with A/CNAME/TXT
+  records and [`examples/basic`](examples/basic) for a public zone with an apex
+  A-alias to an ALB.
+
+contributors: []
